@@ -20,7 +20,7 @@ import model.Product;
 /**
  * Servlet implementation class ProductController
  */
-@WebServlet(urlPatterns = { "/Product"})
+@WebServlet(urlPatterns = { "/product" })
 public class ProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Resource(name = "jdbc/shopping_sample")
@@ -58,6 +58,8 @@ public class ProductController extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		List<Product> products = productDAO.findAll();
+		request.setAttribute("productList", products);
+		request.getRequestDispatcher("views/product/index.jsp").forward(request, response);
 		products.forEach(System.out::println);
 	}
 

@@ -28,10 +28,9 @@ public class ProductImpl implements ProductDao {
 			while (rSet.next()) {
 				int id = rSet.getInt("id");
 				String name = rSet.getString("name");
-				Double price = rSet.getDouble("price");
+				Double price = (double) rSet.getFloat("price");
 				String image = rSet.getString("image");
-				System.out.println(id + " " + name + " " + price + " " + image);
-				products.add(new Product(id, name, id, image));
+				products.add(new Product(id, name, price, image));
 			}
 
 		} catch (Exception e) {
