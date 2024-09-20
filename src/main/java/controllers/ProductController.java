@@ -41,12 +41,6 @@ public class ProductController extends HttpServlet {
 		// TODO Auto-generated method stub
 		super.init(config);
 		productDAO = new ProductImpl(this.dataSource);
-		try {
-			System.out.println(dataSource.getConnection());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	/**
