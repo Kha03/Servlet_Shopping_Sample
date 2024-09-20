@@ -1,0 +1,7 @@
+<Context>
+	<Resource name="jdbc/shopping_sample" auth="Container"
+		type="javax.sql.DataSource" maxActive="50" maxIdle="30"
+		maxWait="10000" username="sa" password="admin"
+		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://localhost:1433;databaseName=shopping_sample;encrypt=false" />
+</Context>
