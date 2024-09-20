@@ -42,12 +42,6 @@ public class CartController extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
 		super.init(config);
-		try {
-			System.out.println(dataSource.getConnection());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		productDAO = new ProductImpl(this.dataSource);
 	}
 
@@ -64,10 +58,10 @@ public class CartController extends HttpServlet {
 			doGetBuy(request, response);
 			break;
 		case "remove":
-			 doGetRemove(request, response);
+			doGetRemove(request, response);
 			break;
 		case "update":
-			// doGetUpdate(request, response);
+			doGetUpdate(request, response);
 			break;
 		default:
 			doGetView(request, response);
@@ -110,6 +104,23 @@ public class CartController extends HttpServlet {
 		session.setAttribute("cartItems", itemCarts);
 		response.sendRedirect("cart");
 	}
+
+	private void doGetUpdate(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		List<ItemCart> itemCarts = (ArrayList<ItemCart>) session.getAttribute("cartItems");
+		int id = Integer.parseInt(request.getParameter("id"));
+		int index = isExisting(id, itemCarts);
+		if (index != -1) {
+			ItemCart cart = itemCarts.get(index);
+			int quantityNew = Integer.parseInt(request.getParameter("quantity"));
+			cart.setQuantity(quantityNew);
+			itemCarts.set(index, cart);
+			session.setAttribute("cartItems", itemCarts);
+			response.sendRedirect("cart");
+		}
+	}
+
 	private int isExisting(int id, List<ItemCart> itemCarts) {
 		for (int i = 0; i < itemCarts.size(); i++) {
 			if (itemCarts.get(i).getProduct().getId() == id) {

@@ -48,7 +48,9 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 			<span class="navbar-brand mb-0 h1 text-light">Product List</span>
 		</div>
 	</nav>
+
 	<div class="container mt-5">
+		<a class="p-1 bg-primary text-white" href="${pageContext.request.contextPath}/cart">Go To Cart</a>
 		<div class="row">
 			<c:forEach var="product" items="${productList}" varStatus="status">
 				<div class="col-md-4 mb-4">
@@ -66,10 +68,10 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 								<input type="number" class="form-control" value="1" min="1"
 									aria-label="Quantity" name="quality_${product.id}"
 									id="quantity_${product.id}">
-								<button class="btn btn-outline-secondary btn_quantity" type="button"
-									data-action="increment">+</button>
-								<button class="btn btn-outline-secondary btn_quantity" type="button"
-									data-action="decrement">-</button>
+								<button class="btn btn-outline-secondary btn_quantity"
+									type="button" data-action="increment">+</button>
+								<button class="btn btn-outline-secondary btn_quantity"
+									type="button" data-action="decrement">-</button>
 							</div>
 							<a href="#" class="btn btn-primary"
 								onclick="addToCart(${product.id})">Add to Cart</a>

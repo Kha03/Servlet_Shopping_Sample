@@ -54,7 +54,6 @@ public class ProductController extends HttpServlet {
 		List<Product> products = productDAO.findAll();
 		request.setAttribute("productList", products);
 		request.getRequestDispatcher("views/product/index.jsp").forward(request, response);
-		products.forEach(System.out::println);
 	}
 
 	/**

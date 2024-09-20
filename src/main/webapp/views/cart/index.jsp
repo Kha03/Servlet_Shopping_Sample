@@ -1,3 +1,4 @@
+<%@page import="model.ItemCart"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
@@ -44,6 +45,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 </style>
 </head>
 <body>
+	<c:set var="total" value="0" />
 	<nav class="navbar navbar-light bg-dark container">
 		<div class="container-fluid">
 			<span class="navbar-brand mb-0 h1 text-light">Shopping Cart</span>
@@ -71,6 +73,9 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 				</thead>
 				<tbody>
 					<c:forEach var="item" items="${cartItems}" varStatus="status">
+						<c:set var="itemTotal"
+							value="${item.product.price * item.quantity}" />
+						<c:set var="total" value="${total + itemTotal}" />
 						<tr>
 							<td><img
 								src="${pageContext.request.contextPath}/assets/images/${item.product.image}"
@@ -82,7 +87,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 								<div class="input-group">
 									<input type="number" class="form-control"
 										value="${item.quantity}" min="1" aria-label="Quantity"
-										name="quantity_${item.product.id}">
+										id="quantity_${item.product.id}">
 									<button class="btn btn-outline-secondary btn_quantity"
 										type="button" data-action="increment"
 										data-id="${item.product.id}">+</button>
@@ -91,14 +96,13 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 										data-id="${item.product.id}">-</button>
 								</div>
 							</td>
-							<td>$<fmt:formatNumber
-									value="${item.product.price * item.quantity}" type="currency" /></td>
+							<td>$<fmt:formatNumber value="${itemTotal}" type="currency" /></td>
 							<td><button type="button" class="btn btn-danger"
 									data-bs-toggle="modal" data-bs-target="#myModal"
 									onClick="hanleRemoveModal('${item.product.name}', ${item.product.id})">Remove</button>
 								<button type="button" class="btn btn-success"
 									data-bs-toggle="modal" data-bs-target="#myModal"
-									onClick="hanleUpdateModal('${item.product.name}', ${item.product.id})">Remove</button></td>
+									onClick="hanleUpdateModal('${item.product.name}', ${item.product.id})">Update</button></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -106,8 +110,8 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 			<div class="text-end">
 				<h4>
-					Total Price: $
-					<fmt:formatNumber value="${totalPrice}" type="currency" />
+					Total Price:
+					<fmt:formatNumber value="${total}" type="currency" />
 				</h4>
 				<a href="${pageContext.request.contextPath}/product"
 					class="btn btn-success">Proceed to Checkout</a>
